@@ -364,12 +364,15 @@ def chat():
         api_messages.append({"role": "user", "content": augmented_prompt})
 
         # Call Anthropic API
+        logger.info("Calling Anthropic API with %d messages, prompt length %d chars",
+                     len(api_messages), len(augmented_prompt))
         response = anthropic_client.messages.create(
             model="claude-sonnet-4-5-20250929",
             max_tokens=400,
             system=SYSTEM_PROMPT,
             messages=api_messages,
         )
+        logger.info("Anthropic API response received successfully")
         reply = response.content[0].text
 
         # Log the exchange
