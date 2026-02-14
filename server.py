@@ -1,10 +1,15 @@
 import os
+import sys
 import json
 import random
+import logging
 from datetime import datetime, timezone
 from flask import Flask, render_template, request, jsonify
 import chromadb
 import anthropic
+
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -356,11 +361,14 @@ def chat():
 
         return jsonify(result)
 
-    except anthropic.AuthenticationError:
+    except anthropic.AuthenticationError as e:
+        logger.error("Anthropic AuthenticationError: %s", e)
         return jsonify({"error": "Invalid API key. Please check and try again."}), 401
     except anthropic.APIError as e:
+        logger.error("Anthropic APIError: %s", e)
         return jsonify({"error": str(e)}), 500
     except Exception as e:
+        logger.error("Chat error: %s", e, exc_info=True)
         return jsonify({"error": str(e)}), 500
 
 
