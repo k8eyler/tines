@@ -102,12 +102,18 @@ chroma_client = chromadb.PersistentClient(path=CHROMA_DIR)
 collection = chroma_client.get_collection(name=COLLECTION_NAME)
 
 # Initialize Anthropic client once at module level with generous timeout
+# Force HTTP/1.1 to avoid HTTP/2 connection issues on Railway
+import httpx
 anthropic_client = None
 if ANTHROPIC_API_KEY:
     anthropic_client = anthropic.Anthropic(
         api_key=ANTHROPIC_API_KEY,
         timeout=60.0,
         max_retries=3,
+        http_client=httpx.Client(
+            http2=False,
+            timeout=60.0,
+        ),
     )
 
 
