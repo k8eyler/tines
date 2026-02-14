@@ -263,6 +263,7 @@ def index():
 
 @app.route("/api/health")
 def health():
+    import httpx
     has_key = bool(ANTHROPIC_API_KEY)
     try:
         count = collection.count()
@@ -270,11 +271,23 @@ def health():
     except Exception as e:
         count = 0
         chroma_ok = False
+
+    # Test connectivity to Anthropic
+    anthropic_reachable = False
+    anthropic_error = None
+    try:
+        r = httpx.get("https://api.anthropic.com", timeout=10.0)
+        anthropic_reachable = True
+    except Exception as e:
+        anthropic_error = str(e)
+
     return jsonify({
         "status": "ok",
         "api_key_set": has_key,
         "chroma_ok": chroma_ok,
         "collection_count": count,
+        "anthropic_reachable": anthropic_reachable,
+        "anthropic_error": anthropic_error,
     })
 
 
