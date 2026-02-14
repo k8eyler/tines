@@ -369,17 +369,30 @@ def chat():
             api_messages.append({"role": msg["role"], "content": msg["content"]})
         api_messages.append({"role": "user", "content": augmented_prompt})
 
-        # Call Anthropic API
+        # Call Anthropic API using requests to avoid httpx connection issues
+        import requests as req
         logger.info("Calling Anthropic API with %d messages, prompt length %d chars",
                      len(api_messages), len(augmented_prompt))
-        response = anthropic_client.messages.create(
-            model="claude-sonnet-4-5-20250929",
-            max_tokens=400,
-            system=SYSTEM_PROMPT,
-            messages=api_messages,
+        api_response = req.post(
+            "https://api.anthropic.com/v1/messages",
+            headers={
+                "x-api-key": ANTHROPIC_API_KEY,
+                "anthropic-version": "2023-06-01",
+                "content-type": "application/json",
+            },
+            json={
+                "model": "claude-sonnet-4-5-20250929",
+                "max_tokens": 400,
+                "system": SYSTEM_PROMPT,
+                "messages": api_messages,
+            },
+            timeout=60,
         )
-        logger.info("Anthropic API response received successfully")
-        reply = response.content[0].text
+        logger.info("Anthropic API responded with status %d", api_response.status_code)
+        if api_response.status_code != 200:
+            logger.error("Anthropic API error: %s", api_response.text)
+            return jsonify({"error": f"API error: {api_response.status_code}"}), 500
+        reply = api_response.json()["content"][0]["text"]
 
         # Log the exchange
         if session_id:
