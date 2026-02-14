@@ -247,6 +247,23 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/api/health")
+def health():
+    has_key = bool(ANTHROPIC_API_KEY)
+    try:
+        count = collection.count()
+        chroma_ok = True
+    except Exception as e:
+        count = 0
+        chroma_ok = False
+    return jsonify({
+        "status": "ok",
+        "api_key_set": has_key,
+        "chroma_ok": chroma_ok,
+        "collection_count": count,
+    })
+
+
 @app.route("/api/verify-password", methods=["POST"])
 def verify_password():
     data = request.get_json()
