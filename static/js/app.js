@@ -5,6 +5,7 @@
 let chatHistory = [];
 let isSending = false;
 let sessionId = "";
+let chatUser = "";
 let selectedUserAvatar = "harry";
 let selectedBotAvatar = "kate";
 
@@ -76,6 +77,7 @@ async function transitionToHub() {
             startBtn.textContent = "Continue";
             return;
         }
+        chatUser = data.user || "Unknown";
     } catch (err) {
         passwordError.textContent = "Can't reach server. Is it running?";
         startBtn.disabled = false;
@@ -325,6 +327,7 @@ async function sendMessage(text) {
                 history: historyToSend,
                 session_id: sessionId,
                 display_label: displayText !== text ? displayText : undefined,
+                chat_user: chatUser,
             }),
         });
 

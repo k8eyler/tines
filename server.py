@@ -20,7 +20,12 @@ COLLECTION_NAME = "valentine_messages"
 TASKS_FILE = os.path.join(BASE_DIR, "tasks.json")
 CHAT_LOGS_DIR = os.path.join(BASE_DIR, "chat_logs")
 NUM_RESULTS = 10
-APP_PASSWORD = "dlt4me"
+APP_PASSWORDS = {
+    "dlt4me": "Harry",
+    "$C00ter2020": "Kate",
+    "hehevday": "Other",
+}
+APP_PASSWORD = "dlt4me"  # kept for /api/logs auth
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 
 SYSTEM_PROMPT = """You are Kate — Harry's AI girlfriend. You will be given excerpts from \
@@ -160,7 +165,7 @@ def mark_task_completed(task_id):
 os.makedirs(CHAT_LOGS_DIR, exist_ok=True)
 
 
-def log_exchange(session_id, user_message, bot_reply, display_label=None):
+def log_exchange(session_id, user_message, bot_reply, display_label=None, chat_user="Unknown"):
     """Append a user/bot exchange to the session's log file."""
     log_file = os.path.join(CHAT_LOGS_DIR, session_id + ".json")
 
@@ -169,7 +174,7 @@ def log_exchange(session_id, user_message, bot_reply, display_label=None):
         with open(log_file, "r", encoding="utf-8") as f:
             log = json.load(f)
     else:
-        log = {"session_id": session_id, "started": datetime.now(timezone.utc).isoformat(), "messages": []}
+        log = {"session_id": session_id, "user": chat_user, "started": datetime.now(timezone.utc).isoformat(), "messages": []}
 
     timestamp = datetime.now(timezone.utc).isoformat()
 
@@ -297,12 +302,36 @@ def health():
     })
 
 
+@app.route("/api/logs")
+def view_logs():
+    password = request.args.get("pw", "")
+    if password != APP_PASSWORD:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    logs = []
+    if os.path.isdir(CHAT_LOGS_DIR):
+        for filename in sorted(os.listdir(CHAT_LOGS_DIR), reverse=True):
+            if filename.endswith(".json"):
+                filepath = os.path.join(CHAT_LOGS_DIR, filename)
+                try:
+                    with open(filepath, "r", encoding="utf-8") as f:
+                        session_data = json.load(f)
+                    logs.append({
+                        "session_id": filename.replace(".json", ""),
+                        "exchanges": session_data,
+                    })
+                except (json.JSONDecodeError, IOError):
+                    continue
+
+    return jsonify({"total_sessions": len(logs), "sessions": logs})
+
+
 @app.route("/api/verify-password", methods=["POST"])
 def verify_password():
     data = request.get_json()
     password = data.get("password", "").strip() if data else ""
-    if password == APP_PASSWORD:
-        return jsonify({"valid": True})
+    if password in APP_PASSWORDS:
+        return jsonify({"valid": True, "user": APP_PASSWORDS[password]})
     return jsonify({"valid": False, "error": "Wrong password. Try again!"}), 401
 
 
@@ -330,6 +359,7 @@ def chat():
     history = data.get("history", [])
     session_id = data.get("session_id", "")
     display_label = data.get("display_label")
+    chat_user = data.get("chat_user", "Unknown")
 
     if not message:
         return jsonify({"error": "No message provided"}), 400
@@ -396,7 +426,7 @@ def chat():
 
         # Log the exchange
         if session_id:
-            log_exchange(session_id, message, reply, display_label)
+            log_exchange(session_id, message, reply, display_label, chat_user)
 
         result = {"reply": reply}
         if active_task_id is not None:
