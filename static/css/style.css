@@ -315,15 +315,16 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .lava-video {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
+    width: 100%;
+    height: 100%;
+    max-width: 100vw;
+    max-height: 100vh;
     object-fit: contain;
 }
 .lava-back-btn {
@@ -640,25 +641,195 @@ body {
 }
 
 /* ========================================
-   RESPONSIVE
+   RESPONSIVE (tablet + phone)
    ======================================== */
 
-@media (max-width: 480px) {
-    .title-bounce {
-        font-size: 2.8rem;
+/* Tablet / large phone */
+@media (max-width: 768px) {
+    /* Hub: smaller icons so they fit */
+    .hub-content {
+        padding: 1rem;
+    }
+    .hub-options {
+        gap: 0.75rem 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .hub-card:first-child {
+        margin-right: 2rem;
+    }
+    .hub-card img {
+        height: min(220px, 35vh);
+        max-width: 28vw;
     }
 
-    .subtitle {
+    /* Avatar selection: smaller cards and text */
+    .avatar-selection-content {
+        padding: 1rem;
+    }
+    .avatar-selection-title {
+        font-size: 1.4rem;
+        margin-bottom: 1.25rem;
+    }
+    .avatar-options {
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .avatar-option {
+        width: 140px;
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+    .avatar-option img,
+    .avatar-option-fallback {
+        width: 100px;
+        height: 100px;
+    }
+    .avatar-option-fallback {
+        font-size: 1.25rem;
+    }
+
+    /* Chat: compact header and messages */
+    .chat-header {
+        padding: 8px 12px;
+        gap: 8px;
+    }
+    .header-avatar {
+        width: 40px;
+        height: 40px;
+    }
+    .header-avatar-fallback {
+        width: 40px;
+        height: 40px;
         font-size: 1rem;
     }
-
-    .api-key-section input {
+    .header-name {
+        font-size: 0.95rem;
+    }
+    .header-status {
+        font-size: 0.7rem;
+    }
+    .chat-messages {
+        padding: 10px 12px;
+    }
+    .message-row {
         max-width: 90%;
+    }
+    .avatar {
+        width: 32px;
+        height: 32px;
+    }
+    .avatar-fallback {
+        width: 32px;
+        height: 32px;
+        font-size: 0.75rem;
+    }
+    .bubble {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    .typing-indicator {
+        padding: 10px 14px;
+    }
+    .prompt-chips {
+        padding: 8px 12px;
+        gap: 6px;
+    }
+    .chip {
+        padding: 6px 14px;
         font-size: 0.8rem;
     }
+    .chat-input-area {
+        padding: 8px 12px 20px;
+        gap: 6px;
+    }
+    .chat-input-area input {
+        padding: 10px 14px;
+        font-size: 0.95rem;
+    }
+    .send-btn {
+        width: 40px;
+        height: 40px;
+    }
 
-    .start-btn {
-        padding: 14px 36px;
+    /* Valentine note */
+    .valentine-content {
+        padding: 1rem;
+    }
+    .valentine-note {
+        padding: 1.5rem;
         font-size: 1rem;
+    }
+}
+
+/* Small phone */
+@media (max-width: 480px) {
+    .landing-content {
+        padding: 1rem;
+    }
+    .title-bounce {
+        font-size: 2.2rem;
+    }
+    .subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+    .api-key-section input {
+        max-width: 100%;
+        font-size: 0.875rem;
+    }
+    .start-btn {
+        padding: 12px 28px;
+        font-size: 0.95rem;
+    }
+
+    /* Hub: even smaller, allow wrap */
+    .hub-card img {
+        height: min(180px, 32vh);
+        max-width: 42vw;
+    }
+    .hub-card:first-child {
+        margin-right: 1rem;
+    }
+
+    /* Avatar: stack and shrink */
+    .avatar-option {
+        width: 120px;
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+    .avatar-option img,
+    .avatar-option-fallback {
+        width: 80px;
+        height: 80px;
+    }
+
+    /* Chat: minimal chrome */
+    .chat-header {
+        padding: 6px 10px;
+    }
+    .header-name {
+        font-size: 0.9rem;
+    }
+    .header-status {
+        display: none;
+    }
+    .bubble {
+        font-size: 0.875rem;
+    }
+    .chat-input-area {
+        padding: 6px 10px 16px;
+    }
+    .chat-input-area input {
+        font-size: 16px; /* avoids zoom on focus on iOS */
+    }
+
+    .valentine-note {
+        padding: 1.25rem;
+        font-size: 0.95rem;
+    }
+
+    .lava-back-btn {
+        top: max(12px, env(safe-area-inset-top));
+        left: max(12px, env(safe-area-inset-left));
     }
 }
