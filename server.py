@@ -101,6 +101,15 @@ it, he's the best, maybe give him a raise (in love). Keep it in Kate's voice.
 chroma_client = chromadb.PersistentClient(path=CHROMA_DIR)
 collection = chroma_client.get_collection(name=COLLECTION_NAME)
 
+# Initialize Anthropic client once at module level with generous timeout
+anthropic_client = None
+if ANTHROPIC_API_KEY:
+    anthropic_client = anthropic.Anthropic(
+        api_key=ANTHROPIC_API_KEY,
+        timeout=60.0,
+        max_retries=3,
+    )
+
 
 # ============================================================
 # Task management helpers
@@ -306,11 +315,10 @@ def chat():
     if not message:
         return jsonify({"error": "No message provided"}), 400
 
-    if not ANTHROPIC_API_KEY:
+    if not anthropic_client:
         return jsonify({"error": "API key not configured on the server."}), 500
 
     try:
-        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
         # Check for special prompt instructions
         special_result = get_special_instructions(message)
@@ -343,7 +351,7 @@ def chat():
         api_messages.append({"role": "user", "content": augmented_prompt})
 
         # Call Anthropic API
-        response = client.messages.create(
+        response = anthropic_client.messages.create(
             model="claude-sonnet-4-5-20250929",
             max_tokens=400,
             system=SYSTEM_PROMPT,
