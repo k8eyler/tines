@@ -1,0 +1,26 @@
+# Private data — your real texts!
+messages.json
+chat copy.db
+chat copy.db-shm
+chat copy.db-wal
+
+# Chat logs (generated at runtime)
+chat_logs/
+
+# Old Streamlit version
+app.py
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp

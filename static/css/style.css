@@ -1,0 +1,664 @@
+/* ========================================
+   KATE AI — Custom Styles
+   Edit these variables to change the vibe!
+   ======================================== */
+
+:root {
+    --pink-light: #FFD6E0;
+    --pink-main: #FF6B8A;
+    --pink-dark: #E84575;
+    --purple-light: #E8D5F5;
+    --blue-sent: #007AFF;
+    --gray-received: #E9E9EB;
+    --bg-gradient: linear-gradient(135deg, #FFD6E0 0%, #FFF0F5 40%, #E8D5F5 100%);
+    --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* ========================================
+   SCREEN TRANSITIONS
+   ======================================== */
+
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.screen.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+    z-index: 10;
+}
+
+/* ========================================
+   LANDING PAGE
+   ======================================== */
+
+#landing-page {
+    background: var(--bg-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.landing-content {
+    text-align: center;
+    z-index: 1;
+    padding: 2rem;
+}
+
+.title-bounce {
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--pink-dark);
+    animation: bounceIn 1s ease-out;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #888;
+    margin-bottom: 2.5rem;
+    font-style: italic;
+    animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.api-key-section {
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+.api-key-section input {
+    width: 100%;
+    max-width: 400px;
+    padding: 14px 20px;
+    border: 2px solid var(--pink-light);
+    border-radius: 30px;
+    font-size: 0.9rem;
+    outline: none;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    transition: border-color 0.3s;
+    font-family: var(--font-main);
+}
+
+.api-key-section input:focus {
+    border-color: var(--pink-main);
+}
+
+.password-error {
+    color: var(--pink-dark);
+    font-size: 0.85rem;
+    margin-top: 8px;
+    min-height: 1.2em;
+}
+
+.start-btn {
+    padding: 16px 48px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+    background: var(--pink-main);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: fadeInUp 1s ease-out 0.7s both, pulse 2s ease-in-out 2s infinite;
+    font-family: var(--font-main);
+}
+
+.start-btn:hover {
+    background: var(--pink-dark);
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(232, 69, 117, 0.4);
+}
+
+/* Interactive Hearts Canvas - on top so you push hearts away to reveal form */
+#hearts-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;  /* clicks go through to title/input/button */
+    cursor: default;
+}
+
+/* ========================================
+   HUB PAGE (images only, no title)
+   ======================================== */
+#hub-page {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hub-content {
+    text-align: center;
+    padding: 2rem;
+}
+.hub-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.hub-card {
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+.hub-card:hover {
+    transform: scale(1.05);
+}
+.hub-card:first-child {
+    margin-right: 7rem;
+}
+.hub-card img {
+    display: block;
+    width: auto;
+    height: 360px;
+    object-fit: contain;
+}
+.back-btn-text {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-family: var(--font-main);
+    text-decoration: underline;
+}
+.back-btn-text:hover {
+    color: var(--pink-dark);
+}
+
+/* ========================================
+   VALENTINE PAGE
+   ======================================== */
+#valentine-page {
+    background: var(--bg-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.valentine-content {
+    text-align: center;
+    padding: 2rem;
+    max-width: 480px;
+}
+.valentine-note {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    border: 2px solid var(--pink-light);
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: #333;
+}
+.valentine-note p {
+    margin-bottom: 1rem;
+}
+.valentine-note p:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================================
+   AVATAR SELECTION (mood / choose Kate)
+   ======================================== */
+#mood-page,
+#kate-choice-page {
+    background: var(--bg-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.avatar-selection-content {
+    text-align: center;
+    padding: 2rem;
+}
+.avatar-selection-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--pink-dark);
+    margin-bottom: 2rem;
+}
+.avatar-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+.avatar-option {
+    width: 300px;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid var(--pink-light);
+    border-radius: 16px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    font-family: var(--font-main);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--pink-dark);
+}
+.avatar-option:hover {
+    background: white;
+    border-color: var(--pink-main);
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(232, 69, 117, 0.25);
+}
+.avatar-option img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.avatar-option-fallback {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--pink-main);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+/* ========================================
+   LAVA WATCH
+   ======================================== */
+#lava-page {
+    background: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.lava-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.lava-video {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+.lava-back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-main);
+    font-size: 1rem;
+}
+.lava-back-btn:hover {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+/* ========================================
+   CHAT PAGE
+   ======================================== */
+
+#chat-page {
+    display: flex;
+    flex-direction: column;
+    background: #F5F5F5;
+}
+
+/* Chat Header */
+.chat-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid #E0E0E0;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: var(--blue-sent);
+    cursor: pointer;
+    padding: 4px 8px;
+    font-family: var(--font-main);
+}
+
+.header-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.header-avatar-fallback {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--pink-main);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.header-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.header-status {
+    font-size: 0.8rem;
+    color: #888;
+    margin-left: auto;
+}
+
+/* Chat Messages Area */
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Message Rows */
+.message-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    max-width: 85%;
+    animation: messageSlideIn 0.3s ease-out;
+}
+
+.message-row.kate {
+    align-self: flex-start;
+}
+
+.message-row.harry {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+/* Avatars in chat */
+.avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.avatar-fallback {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.avatar-fallback.kate {
+    background: var(--pink-main);
+}
+
+.avatar-fallback.harry {
+    background: var(--blue-sent);
+}
+
+/* Chat Bubbles */
+.bubble {
+    padding: 10px 16px;
+    font-size: 1rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+    max-width: 100%;
+}
+
+.message-row.kate .bubble {
+    background: var(--gray-received);
+    color: #000;
+    border-radius: 18px 18px 18px 4px;
+}
+
+.message-row.harry .bubble {
+    background: var(--blue-sent);
+    color: white;
+    border-radius: 18px 18px 4px 18px;
+}
+
+/* Error bubble */
+.message-row.error .bubble {
+    background: #FFE4E4;
+    color: #C33;
+    border-radius: 18px;
+    font-size: 0.9rem;
+}
+
+/* Typing Indicator */
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: 14px 18px;
+    background: var(--gray-received);
+    border-radius: 18px 18px 18px 4px;
+    width: fit-content;
+}
+
+.typing-indicator span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #999;
+    animation: typingDot 1.4s infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Prompt Chips */
+.prompt-chips {
+    display: flex;
+    gap: 8px;
+    padding: 10px 16px;
+    overflow-x: auto;
+    flex-shrink: 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+.prompt-chips::-webkit-scrollbar {
+    display: none;
+}
+
+.chip {
+    padding: 8px 18px;
+    border: 2px solid var(--pink-main);
+    border-radius: 20px;
+    background: white;
+    color: var(--pink-main);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    font-family: var(--font-main);
+}
+
+.chip:hover {
+    background: var(--pink-main);
+    color: white;
+}
+
+/* Chat Input Area */
+.chat-input-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px 28px;
+    background: white;
+    border-top: 1px solid #E0E0E0;
+    flex-shrink: 0;
+}
+
+.chat-input-area input {
+    flex: 1;
+    padding: 12px 18px;
+    border: 1px solid #DDD;
+    border-radius: 24px;
+    font-size: 1rem;
+    outline: none;
+    background: #F5F5F5;
+    transition: border-color 0.3s;
+    font-family: var(--font-main);
+}
+
+.chat-input-area input:focus {
+    border-color: var(--pink-main);
+    background: white;
+}
+
+.send-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: var(--blue-sent);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.send-btn:hover {
+    background: #0063D1;
+    transform: scale(1.05);
+}
+
+.send-btn:disabled {
+    background: #CCC;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ========================================
+   KEYFRAME ANIMATIONS
+   ======================================== */
+
+@keyframes bounceIn {
+    0%   { opacity: 0; transform: scale(0.5); }
+    60%  { opacity: 1; transform: scale(1.05); }
+    80%  { transform: scale(0.97); }
+    100% { transform: scale(1); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 4px 15px rgba(232, 69, 117, 0.3); }
+    50%      { box-shadow: 0 8px 30px rgba(232, 69, 117, 0.5); }
+}
+
+@keyframes typingDot {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30%           { transform: translateY(-6px); opacity: 1; }
+}
+
+@keyframes messageSlideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 480px) {
+    .title-bounce {
+        font-size: 2.8rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .api-key-section input {
+        max-width: 90%;
+        font-size: 0.8rem;
+    }
+
+    .start-btn {
+        padding: 14px 36px;
+        font-size: 1rem;
+    }
+}

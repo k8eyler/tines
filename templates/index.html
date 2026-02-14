@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kate AI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
+</head>
+<body>
+
+    <!-- SCREEN 1: Landing Page -->
+    <div id="landing-page" class="screen active">
+        <canvas id="hearts-canvas"></canvas>
+        <div class="landing-content">
+            <h1 class="title-bounce">Tine.ai 💌</h1>
+            <p class="subtitle">Maybe I've been AI all along...</p>
+
+            <div class="api-key-section">
+                <input
+                    type="password"
+                    id="password-input"
+                    placeholder="Enter password"
+                    autocomplete="off"
+                >
+                <p id="password-error" class="password-error"></p>
+            </div>
+
+            <button id="start-chat-btn" class="start-btn">Continue</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 2: Hub - choose destination (images only) -->
+    <div id="hub-page" class="screen">
+        <div class="hub-content">
+            <div class="hub-options">
+                <button id="hub-valentine" class="hub-card" type="button" aria-label="Happy vday">
+                    <img src="/static/images/letter.png" alt="Happy vday">
+                </button>
+                <button id="hub-kate" class="hub-card" type="button" aria-label="Kate AI">
+                    <img src="/static/images/chat.png" alt="Kate AI">
+                </button>
+                <button id="hub-lava" class="hub-card" type="button" aria-label="Lava watch">
+                    <img src="/static/images/lava.png" alt="Lava watch">
+                </button>
+            </div>
+            <button id="hub-back-btn" class="back-btn-text">← Back to landing</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 3a: Valentine note -->
+    <div id="valentine-page" class="screen">
+        <div class="valentine-content">
+            <div class="valentine-note">
+                <p>Happy Tine's Day to the most DLT I've ever known 💕 I'm sorry you can't enjoy chocolates today, but I hope this is a little bit of a sweet treat.</p>
+                <p>It's been so much fun getting to reconnect over the last few months and I'm so glad you're in my life.</p>
+            </div>
+            <button id="valentine-back-btn" class="start-btn">← Back</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 3b: Kate AI – mood (user avatar) -->
+    <div id="mood-page" class="screen">
+        <div class="avatar-selection-content">
+            <h2 class="avatar-selection-title">Your mood?</h2>
+            <div class="avatar-options">
+                <button class="avatar-option" data-avatar="harry" data-role="user">
+                    <img src="/static/images/harry.png" alt="Harry" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <span class="avatar-option-fallback" style="display:none;">H</span>
+                    <span class="avatar-option-label">Harry</span>
+                </button>
+                <button class="avatar-option" data-avatar="horse" data-role="user">
+                    <img src="/static/images/horse.png" alt="Horse" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <span class="avatar-option-fallback" style="display:none;">🐴</span>
+                    <span class="avatar-option-label">Horse</span>
+                </button>
+            </div>
+            <button id="mood-back-btn" class="back-btn-text">← Back</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 3c: Kate AI – choose Kate (bot avatar) -->
+    <div id="kate-choice-page" class="screen">
+        <div class="avatar-selection-content">
+            <h2 class="avatar-selection-title">Choose Kate Bot</h2>
+            <div class="avatar-options">
+                <button class="avatar-option" data-avatar="kate" data-role="bot">
+                    <img src="/static/images/kate.png" alt="Kate AI" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <span class="avatar-option-fallback" style="display:none;">K</span>
+                    <span class="avatar-option-label">Kate AI</span>
+                </button>
+                <button class="avatar-option" data-avatar="bald" data-role="bot">
+                    <img src="/static/images/bald.png" alt="Bald" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <span class="avatar-option-fallback" style="display:none;">B</span>
+                    <span class="avatar-option-label">Bald</span>
+                </button>
+            </div>
+            <button id="kate-choice-back-btn" class="back-btn-text">← Back</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 3d: Lava watch -->
+    <div id="lava-page" class="screen">
+        <div class="lava-content">
+            <video id="lava-video" class="lava-video" autoplay loop muted playsinline>
+                <source src="/static/video/lava.mp4" type="video/mp4">
+            </video>
+            <button id="lava-back-btn" class="lava-back-btn">← Back</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 4: Chat Interface -->
+    <div id="chat-page" class="screen">
+        <div class="chat-header">
+            <button id="back-btn" class="back-btn">←</button>
+            <img id="header-bot-avatar" src="/static/images/kate.png" class="header-avatar" alt="Kate" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div id="header-bot-fallback" class="header-avatar-fallback" style="display:none;">K</div>
+            <span id="header-bot-name" class="header-name">Kate</span>
+            <span class="header-status">AI Girlfriend ✨</span>
+        </div>
+
+        <div id="chat-messages" class="chat-messages"></div>
+
+        <div id="prompt-chips" class="prompt-chips">
+            <button class="chip" data-prompt="What do you like the most about me?">What do you like the most about me? 🥰</button>
+            <button class="chip" data-prompt="suggest_horse_meal">Suggest a horse meal 🐴</button>
+            <button class="chip" data-prompt="be_my_boss">Be my boss 👨🏻‍💻</button>
+            <button class="chip" data-prompt="I miss you so much">I miss you 🥺</button>
+        </div>
+
+        <div class="chat-input-area">
+            <input
+                type="text"
+                id="chat-input"
+                placeholder="Text Kate..."
+                autocomplete="off"
+            >
+            <button id="send-btn" class="send-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script src="/static/js/hearts.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

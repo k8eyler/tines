@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "task": "Find a replacement shower head filter — 1.75\" in diameter by 3.4\" long",
+    "completed": false
+  },
+  {
+    "id": 2,
+    "task": "Source additional volunteer opportunities (the first one never got back to me)",
+    "completed": false
+  },
+  {
+    "id": 3,
+    "task": "Figure out if I'm responsible for income tax in both NY and CO on the Airbnb income I've received, or which state I need to report it to",
+    "completed": false
+  },
+  {
+    "id": 4,
+    "task": "Find a reformer Pilates studio near office (111 E 18th) or home with a good intro deal",
+    "completed": false
+  },
+  {
+    "id": 5,
+    "task": "Sign me up for a New York Public Library card with access to digital downloads (Libby)",
+    "completed": false
+  }
+]
